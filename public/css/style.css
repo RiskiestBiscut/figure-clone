@@ -1,0 +1,28 @@
+.background-blue {
+    background: rgb(20, 32, 50);
+}
+
+.title-color {
+    color: white;
+}
+
+.link-style {
+    text-decoration: none;
+}
+
+.home-margin {
+    margin-top: 4em;
+}
+
+.background-gradient {
+    background: linear-gradient(0deg, rgba(20, 32, 50, 1), rgba(20, 32, 50, 0.5)) , url(../images/main-background.png);
+    background-size: cover;
+}
+
+.body-full {
+    height: 100vh;
+}
+
+.white {
+    color: white;
+}
