@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from "mongoose"
 import passport from"passport"
+import passportConfig from "./config/passport.js";
 import dotenv from 'dotenv'
 import session from "express-session"
 import MongoStore from "connect-mongo"
@@ -10,12 +11,13 @@ import connectDB from "./config/db.js"
 
 // import routes
 import mainRoutes from './routes/main.js'
+import postRoutes from './routes/posts.js'
 
 //Use .env file in config folder
 dotenv.config({ path: "./config/config.env" });
 
 // Passport config
-// require("./config/passport")(passport);
+passportConfig(passport)
 
 //Connect To Database
 connectDB();
@@ -50,12 +52,20 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// check session data
+app.use((req, res, next) => {
+    console.log('Session data:', req.session);
+    next();
+  });
+  
+
 //Use flash messages for errors, info, ect...
 app.use(flash());
 
 
 //routes
 app.use("/", mainRoutes);
+app.use("/post", postRoutes);
 
 //Server listening
 const PORT = process.env.PORT || 2121

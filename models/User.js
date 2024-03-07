@@ -31,13 +31,22 @@ UserSchema.pre("save", function save(next) {
 
 // Helper method for validating user's password.
 
-UserSchema.methods.comparePassword = function comparePassword(
-  candidatePassword,
-  cb
-) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    cb(err, isMatch);
-  });
-};
+UserSchema.methods.comparePassword = async function comparePassword(candidatePassword) {
+  try {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// UserSchema.methods.comparePassword = function comparePassword(
+//   candidatePassword,
+//   cb
+// ) {
+//   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+//     cb(err, isMatch);
+//   });
+// };
 
 export default mongoose.model("User", UserSchema);
